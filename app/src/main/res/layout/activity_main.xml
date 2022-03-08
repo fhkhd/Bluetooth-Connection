@@ -73,7 +73,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/mssg_tv"
+            android:id="@+id/mssg_ed"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="3"
