@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -61,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         initID();
 
-        bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        Log.e("wwww" , bluetoothAdapter.toString());
 
         if(!bluetoothAdapter.isEnabled())
         {
@@ -279,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void implementListeners() {
 
-//        deviseslist_btn.setOnClickListener(new View.OnClickListener() {
+//        listDevices.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                Set<BluetoothDevice> bt=bluetoothAdapter.getBondedDevices();
@@ -296,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
 //                        index++;
 //                    }
 //                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,strings);
-//                    listView_devices.setAdapter(arrayAdapter);
+//                    listView.setAdapter(arrayAdapter);
 //                }
 //            }
 //        });

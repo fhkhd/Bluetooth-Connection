@@ -79,6 +79,7 @@
         android:layout_height="wrap_content"
         android:text="پیام"
         android:textSize="25dp"
+        android:textIsSelectable="true"
         android:fontFamily="@font/iran_sans"
         android:layout_gravity="center_horizontal"/>
 
