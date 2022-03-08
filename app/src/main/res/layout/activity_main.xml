@@ -29,7 +29,7 @@
             android:id="@+id/connection_mode_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="قطعی ارتباظ"
+            android:text="قطعی ارتباط"
             android:textAlignment="center"
             android:fontFamily="@font/iran_sans"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,14 +48,33 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:visibility="visible">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_devices"
+    <ListView
+        android:id="@+id/listView_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:visibility="visible"
-        android:background="@color/purple_500"/>
+        android:background="@color/purple_500"
+        android:visibility="visible" />
+
+
+    <TextView
+        android:id="@+id/nofind_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:fontFamily="@font/iran_sans"
+        android:textColor="@color/white"
+        android:outlineSpotShadowColor="@color/purple_500"
+        android:text="دستگاهی یافت نشد!"
+        android:visibility="visible" />
+</RelativeLayout>
 
     <TextView
         android:id="@+id/txt_message"
