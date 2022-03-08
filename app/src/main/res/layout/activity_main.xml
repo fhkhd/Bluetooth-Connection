@@ -26,7 +26,7 @@
             android:layout_weight="1"/>
 
         <TextView
-            android:id="@+id/connection_mode_btn"
+            android:id="@+id/connection_mode_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="قطعی ارتباط"
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/lisen_btn"
+            android:id="@+id/listen_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -50,30 +50,27 @@
     </LinearLayout>
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:visibility="visible">
+    android:layout_height="200dp">
 
     <ListView
         android:id="@+id/listView_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:background="@color/purple_500"
-        android:visibility="visible" />
+        android:background="@color/purple_500" />
 
 
     <TextView
         android:id="@+id/nofind_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:gravity="center"
+        android:layout_alignParentBottom="true"
         android:fontFamily="@font/iran_sans"
-        android:textColor="@color/white"
+        android:gravity="center"
         android:outlineSpotShadowColor="@color/purple_500"
         android:text="دستگاهی یافت نشد!"
-        android:visibility="visible" />
+        android:textColor="@color/white" />
 </RelativeLayout>
 
     <TextView

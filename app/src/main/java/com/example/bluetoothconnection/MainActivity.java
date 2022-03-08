@@ -7,15 +7,19 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,12 +27,15 @@ import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    private Button lisen_btn , send_btn , deviseslist_btn ;
+    private Button listen_btn , send_btn , deviseslist_btn ;
     private EditText mssg_ed;
-    private TextView connection_mode_btn , txt_message , nofind_tv;
+    private TextView connection_mode_tv , txt_message , nofind_tv;
     private ListView listView_devices;
+    private String string ,st_message;
+
 
 
     private BluetoothAdapter bluetoothAdapter;
@@ -54,14 +61,25 @@ public class MainActivity extends AppCompatActivity {
 
         initID();
 
+        bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+
+        if(!bluetoothAdapter.isEnabled())
+        {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent,REQUEST_ENABLE_BLUETOOTH);
+        }
+
+        implementListeners();
+
+
     }
 
     private void initID(){
-        lisen_btn = findViewById(R.id.lisen_btn);
+        listen_btn = findViewById(R.id.listen_btn);
         send_btn = findViewById(R.id.send_btn);
         deviseslist_btn = findViewById(R.id.deviseslist_btn);
         mssg_ed = findViewById(R.id.mssg_ed);
-        connection_mode_btn = findViewById(R.id.connection_mode_btn);
+        connection_mode_tv = findViewById(R.id.connection_mode_tv);
         txt_message = findViewById(R.id.txt_message);
         listView_devices = findViewById(R.id.listView_devices);
         nofind_tv = findViewById(R.id.nofind_tv);
@@ -129,20 +147,20 @@ public class MainActivity extends AppCompatActivity {
             switch (msg.what)
             {
                 case STATE_LISTENING:
-                    connection_mode_btn.setText("Listening...");
+                    connection_mode_tv.setText("Listening...");
                     break;
                 case STATE_CONNECTING:
-                    connection_mode_btn.setText("Connecting...");
+                    connection_mode_tv.setText("Connecting...");
                     break;
                 case STATE_CONNECTED:
-                    connection_mode_btn.setText("Connected");
+                    connection_mode_tv.setText("Connected");
 //                    if (status.getText().toString() == "Connected"){
 //
 //                        status.setTextColor(getResources().getColor(R.color.connected));
 //                    }
                     break;
                 case STATE_CONNECTION_FAILED:
-                    connection_mode_btn.setText("Connection Failed");
+                    connection_mode_tv.setText("Connection Failed");
 //                    status.setTextColor(getResources().getColor(R.color.connection_failed));
                     break;
                 case STATE_MESSAGE_RECEIVED:
@@ -259,6 +277,68 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void implementListeners() {
+
+//        deviseslist_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Set<BluetoothDevice> bt=bluetoothAdapter.getBondedDevices();
+//                String[] strings=new String[bt.size()];
+//                btArray=new BluetoothDevice[bt.size()];
+//                int index=0;
+//
+//                if( bt.size()>0)
+//                {
+//                    for(BluetoothDevice device : bt)
+//                    {
+//                        btArray[index]= device;
+//                        strings[index]=device.getName();
+//                        index++;
+//                    }
+//                    ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,strings);
+//                    listView_devices.setAdapter(arrayAdapter);
+//                }
+//            }
+//        });
+
+        listen_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ServerClass serverClass=new ServerClass();
+                serverClass.start();
+            }
+        });
+
+        listView_devices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ClientClass clientClass=new ClientClass(btArray[i]);
+                clientClass.start();
+
+                connection_mode_tv.setText("Connecting");
+            }
+        });
+
+        send_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                st_message = mssg_ed.getText().toString();
+
+                if(TextUtils.isEmpty(st_message)){
+
+                    Toast.makeText(MainActivity.this, "پیغام خود را بنویسید", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    string= String.valueOf(mssg_ed.getText());
+                    sendReceive.write(string.getBytes());
+                    mssg_ed.setText("");
+                    Toast.makeText(MainActivity.this, "ارسال شد", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
 
 
 }
